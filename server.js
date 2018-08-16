@@ -3,7 +3,7 @@
 =====================================*/
 const express = require('express');
 const morgan = require('morgan');
-const promise = require('bluebird')
+const promise = require('bluebird');
 // const Sequelize = require('sequelize');
 
 var options = {
@@ -20,6 +20,13 @@ const app = express();
 =====================================*/
 app.use(express.static("public"));
 app.use(morgan('tiny'));
+
+/*=====================================
+  Controllers
+=====================================*/
+const userController = require('./controllers/users.js');
+app.use('/users', userController);
+
 /*=====================================
   Constants
 =====================================*/
@@ -28,7 +35,7 @@ const port = process.env.PORT || 3000;
 
 
 
-const db = pgp('postgresql://shawn:strinh777@localhost:5432/planner');
+// const db = pgp('postgresql://shawn:strinh777@localhost:5432/planner');
 
 /*=====================================
   Start listener
@@ -40,14 +47,14 @@ app.listen(port, () => {
 /*=====================================
   Define database connection
 =====================================*/
-db.connect()
-    .then(obj => {
-        console.log('Connected');
-        obj.done(); // success, release the connection;
-    })
-    .catch(error => {
-        console.log('ERROR:', error.message || error);
-    });
+// db.connect()
+//     .then(obj => {
+//         console.log('Connected');
+//         obj.done(); // success, release the connection;
+//     })
+//     .catch(error => {
+//         console.log('ERROR:', error.message || error);
+//     });
 
 // const sequelize = new Sequelize('planner', 'shawn', 'strinh777', {
 //   host: 'localhost',
