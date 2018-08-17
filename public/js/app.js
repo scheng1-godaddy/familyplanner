@@ -7,8 +7,20 @@ class App extends React.Component {
 
   render () {
     return (
-      <h1> Hello </h1>
-    )
+      <div className="App">
+        <header>
+          <div id="logo">
+            <span className="icon">date_range</span>
+            <span>
+              Family<b>Planner</b>
+            </span>
+          </div>
+        </header>
+        <main>
+          <Calendar />
+        </main>
+      </div>
+    );
   }
 }
 
