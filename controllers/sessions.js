@@ -59,4 +59,13 @@ router.get('/', (req, res) => {
   }
 })
 
+router.delete("/", (req, res) => {
+  req.session.destroy( () => {
+    res.status(200).json({
+      status: 200,
+      message: "Logout Complete"
+    });
+  });
+});
+
 module.exports = router;
