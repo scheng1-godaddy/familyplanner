@@ -47,5 +47,16 @@ router.post('/', (req, res, next) => {
     })
 })
 
+router.get('/', (req, res) => {
+  if(req.session.currentUser) {
+    console.log('User session exists', req.session.currentUser);
+    res.json(req.session.currentUser);
+  } else {
+    res.status(401).json({
+      status: 401,
+      message: "User not logged in"
+    })
+  }
+})
 
 module.exports = router;
