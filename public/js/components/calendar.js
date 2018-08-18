@@ -12,7 +12,7 @@ class Calendar extends React.Component {
   /*====================================
     Displays header for calendar
   =====================================*/
-  displayHeader() {
+  displayHeader = () => {
     const monthFormat = "MMMM YYYY";
     return (
       <div className="header row flex-middle">
@@ -35,7 +35,7 @@ class Calendar extends React.Component {
   /*====================================
     Displays days for calendar
   =====================================*/
-  displayDayOfWeek() {
+  displayDayOfWeek = () => {
     const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
     const daysDiv = [];
     for (let i = 0; i < 7; i++) {
@@ -50,7 +50,7 @@ class Calendar extends React.Component {
   /*====================================
     Displays cells for calendar
   =====================================*/
-  displayCells() {
+  displayCells = () => {
     const { currentMonth, selectedDate } = this.state;
     // Get date for start of the currently selected month
     const monthStart = dateFns.startOfMonth(currentMonth);
@@ -89,7 +89,7 @@ class Calendar extends React.Component {
             onClick={() => this.dateClickHandler(dateFns.parse(cloneDay))}
           >
             <span className="number">{formattedDate}</span>
-            <span className="bg">{formattedDate}</span>
+            <span className="bg"></span>
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -106,7 +106,7 @@ class Calendar extends React.Component {
   /*====================================
     Sets selected day to what was clicked
   =====================================*/
-  dateClickHandler(day) {
+  dateClickHandler = (day) => {
     this.setState({
       selectedDate: day
     });
@@ -114,7 +114,7 @@ class Calendar extends React.Component {
   /*====================================
     Displays cells for calendar
   =====================================*/
-  nextMonth() {
+  nextMonth = () => {
     this.setState({
       currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
     });
