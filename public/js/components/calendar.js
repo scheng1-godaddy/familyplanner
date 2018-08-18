@@ -36,36 +36,48 @@ class Calendar extends React.Component {
     Displays days for calendar
   =====================================*/
   displayDayOfWeek() {
-    const dateFormat = "dddd";
-    const days = [];
-    let startDate = dateFns.startOfWeek(this.state.currentMonth);
+    const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
+    const daysDiv = [];
     for (let i = 0; i < 7; i++) {
-      days.push(
+      daysDiv.push(
         <div className="col col-center" key={i}>
-          {dateFns.format(dateFns.addDays(startDate, i), dateFormat)}
+          {days[i]}
         </div>
       );
     }
-    return <div className="days row">{days}</div>;
+    return <div className="days row">{daysDiv}</div>;
   }
   /*====================================
     Displays cells for calendar
   =====================================*/
   displayCells() {
     const { currentMonth, selectedDate } = this.state;
+    // Get date for start of the currently selected month
     const monthStart = dateFns.startOfMonth(currentMonth);
+    // Get date for end of the currently selected month
     const monthEnd = dateFns.endOfMonth(monthStart);
+    // Get the date for first day of the week using date for start of the month
     const startDate = dateFns.startOfWeek(monthStart);
+    // Get the date for last day of the week using date for end of the month
     const endDate = dateFns.endOfWeek(monthEnd);
+    // Use numeric format for date (i.e. 1, 2 ,3)
     const dateFormat = "D";
     const rows = [];
     let days = [];
     let day = startDate;
     let formattedDate = "";
+    // Create day divs, while loop goes until end date
     while (day <= endDate) {
+      // Place into rows
       for (let i = 0; i < 7; i++) {
+        // Take the current day and format it as single digit numeric
         formattedDate = dateFns.format(day, dateFormat);
+        // Make a copy of the date, used for the onclick
         const cloneDay = day;
+        // The ternary below checks to see if date is the same month
+        // If its not the same month it sets a disabled class to the cell
+        // If it is the same month, it checks to see if its the same day as currently
+        // selected; if it is, it puts a selected class on the cell.
         days.push(
           <div
             className={`col cell ${

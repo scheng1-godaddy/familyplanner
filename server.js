@@ -11,6 +11,10 @@ const app = express();
 /*=====================================
   MiddleWare and Dependencies
 =====================================*/
+app.use(express.urlencoded({
+  extended: false
+}));
+app.use(express.json());
 app.use(express.static("public"));
 app.use(morgan('tiny'));
 
