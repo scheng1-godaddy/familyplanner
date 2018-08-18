@@ -2,6 +2,7 @@
   Imports
 ============================================*/
 const express = require('express');
+const bcrypt = require('bcrypt');
 const db = require('../db/db');
 
 // Create router object
@@ -31,6 +32,7 @@ router.get('/', (req, res, next) => {
 ============================================*/
 router.post('/', (req, res, next) => {
   console.log('Creating new user:', req.body);
+  req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
   db.one('INSERT INTO users (username, password, email) VALUES (${username}, ${password}, ${email}) RETURNING id, username, email', req.body)
     .then((data) => {
       console.log('Successfully created user:', res);
@@ -62,7 +64,7 @@ router.get('/:id', (req, res, next) => {
     })
 });
 
-// TODO routes 
+// TODO routes
 // router.get('/:id', );
 // router.put('/:id', );
 // router.delete('/:id', );

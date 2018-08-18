@@ -4,9 +4,15 @@
 const express = require('express');
 const morgan = require('morgan');
 const promise = require('bluebird');
+const session = require('express-session');
 
 const app = express();
 
+app.use(session({
+  secret: "feedmeseymour",
+  resave: false,
+  saveUninitialized: false
+}));
 
 /*=====================================
   MiddleWare and Dependencies
@@ -23,6 +29,9 @@ app.use(morgan('tiny'));
 =====================================*/
 const userController = require('./controllers/users.js');
 app.use('/users', userController);
+
+const sessionsController = require('./controllers/sessions.js');
+app.use('/sessions', sessionsController);
 
 /*=====================================
   Constants
