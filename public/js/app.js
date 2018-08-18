@@ -8,6 +8,7 @@ class App extends React.Component {
   render () {
     return (
       <div className="App">
+        <User />
         <header>
           <div id="logo">
             <span className="icon">date_range</span>
@@ -17,7 +18,6 @@ class App extends React.Component {
           </div>
         </header>
         <main>
-          <User />
           <Calendar />
         </main>
       </div>

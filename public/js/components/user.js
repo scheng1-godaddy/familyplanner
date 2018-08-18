@@ -7,9 +7,26 @@ class User extends React.Component {
   =====================================*/
   displayBar = () => {
     return (
-      <div class="topbar">
-        
-      </div>
+      <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+        <div class="navbar-end">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link login">
+              {(this.props.user != null) ? this.props.user.username : "Not Logged In"}
+            </a>
+              {
+                (this.props.user != null)
+                ? <div class="navbar-dropdown">
+                    <a class="navbar-item" onClick={()=> this.props.toggleState('displayEditProfile')}>Edit Profile</a>
+                    <a class="navbar-item" onClick={()=> this.props.logOut()}>Logout</a>
+                  </div>
+                : <div class="navbar-dropdown">
+                    <a class="navbar-item" onClick={()=> this.props.toggleState('displayLogin')}>Login</a>
+                    <a class="navbar-item" onClick={()=> this.props.toggleState('displayRegister')}>Sign Up</a>
+                  </div>
+              }
+          </div>
+        </div>
+      </nav>
     )
   }
   /*====================================
