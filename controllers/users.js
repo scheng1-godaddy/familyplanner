@@ -40,29 +40,28 @@ router.post('/', (req, res, next) => {
         data: data
       })
     }).catch(error => {
-      console.log('ERROR:', error);
+      return next(error);
     })
 })
 
-// function createPuppy(req, res, next) {
-//   req.body.age = parseInt(req.body.age);
-//   db.none('insert into pups(name, breed, age, sex)' +
-//       'values(${name}, ${breed}, ${age}, ${sex})',
-//     req.body)
-//     .then(function () {
-//       res.status(200)
-//         .json({
-//           status: 'success',
-//           message: 'Inserted one puppy'
-//         });
-//     })
-//     .catch(function (err) {
-//       return next(err);
-//     });
-// }
-
+/*============================================
+  Show ROUTE
+  - Get one user based on id
+============================================*/
+router.get('/:id', (req, res, next) => {
+  console.log('Getting user with id', req.params.id);
+  db.one('SELECT * FROM users WHERE id=$1', [req.params.id])
+    .then((data) => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved user with id: ' + req.params.id
+      });
+    }).catch((err) => {
+      return next(err);
+    })
+});
 // router.get('/:id', );
-// router.post('/', );
 // router.put('/:id', );
 // router.delete('/:id', );
 
