@@ -5,10 +5,7 @@ CREATE DATABASE planner;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  name VARCHAR,
-  icon_id INTEGER,
-  color_id INTEGER
+  username VARCHAR(50),
+  password VARCHAR(255),
+  email VARCHAR(100)
 );
-
-INSERT INTO users (name, icon_id, color_id)
-  VALUES ('Shawn', 1, 1);
