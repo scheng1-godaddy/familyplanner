@@ -18,7 +18,7 @@ class Calendar extends React.Component {
       <div className="header row flex-middle">
         <div className="col col-start">
           <div className="icon" onClick={this.prevMonth}>
-            chevron_left
+            <i class="fas fa-chevron-circle-left"></i>
           </div>
         </div>
         <div className="col col-center">
@@ -27,7 +27,7 @@ class Calendar extends React.Component {
           </span>
         </div>
         <div className="col col-end" onClick={this.nextMonth}>
-          <div className="icon">chevron_right</div>
+          <div className="icon"><i class="fas fa-chevron-circle-right"></i></div>
         </div>
       </div>
     );
