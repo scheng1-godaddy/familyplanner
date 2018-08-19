@@ -5,6 +5,16 @@ class App extends React.Component {
       user: null
     }
   }
+  setUser = (user) => {
+    if (user) {
+      console.log('Setting user', user);
+      this.setState({
+        user: user
+      })
+    } else {
+      console.log('Did not set user: Invalid user data');
+    }
+  }
   /*====================================
     Render function
   =====================================*/
@@ -25,7 +35,7 @@ class App extends React.Component {
             <Calendar />
           </main>
         </div>
-      : <FrontPage />
+      : <FrontPage setUser={this.setUser}/>
     );
   }
 }
