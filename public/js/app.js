@@ -2,7 +2,18 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: null
+      user: {
+        status: 201,
+        message: "Session Created",
+        data: {
+          email: "shawnc8160@gmail.com",
+          family_id: 1,
+          family_name: "Cheng Family",
+          id: 1,
+          name: "Shawn",
+          password: "$2b$10$O.RScnErnvR8gVqBu/mKmeyuvBJreA6FjnWe6ln1o2hdMKDClkeBK"
+        }
+      }
     }
   }
   componentDidMount() {
