@@ -2,16 +2,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: {
-        message: "User exists",
-        status: 200,
-        data: {
-          email: "shawnc8160@gmail.com",
-          id: 3,
-          password: "$2b$10$zmfG3YdDNSjG9ptDvLo/C.8L5hY9Lfll1ulQlMU1LYuGocHO2fsa6",
-          username: "shawnc"
-        }
-      }
+      user: null
     }
   }
   componentDidMount() {
@@ -41,14 +32,13 @@ class App extends React.Component {
           <NavBar user={this.state.user} setUser={this.setUser}/>
             <header>
               <div id="logo">
-                <span className="icon">date_range</span>
                 <span>
-                  Family<b>Planner</b>
+                  {this.state.user.data.family_name}
                 </span>
               </div>
             </header>
           <main>
-            <Calendar />
+            <Calendar user={this.state.user}/>
           </main>
         </div>
       : <FrontPage setUser={this.setUser}/>

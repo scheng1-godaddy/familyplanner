@@ -33,7 +33,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   console.log('Creating new user:', req.body);
   req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-  db.one('INSERT INTO users (username, password, email) VALUES (${username}, ${password}, ${email}) RETURNING id, username, email', req.body)
+  db.one('INSERT INTO users (name, password, email) VALUES (${name}, ${password}, ${email}) RETURNING id, name, email', req.body)
     .then((data) => {
       console.log('Successfully created user:', res);
       res.status(200).json({

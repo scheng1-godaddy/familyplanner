@@ -13,7 +13,7 @@ const router = express.Router();
 ============================================*/
 router.post('/', (req, res, next) => {
   console.log('Creating new session', req.body);
-  db.one('SELECT * FROM users WHERE email=$1', [req.body.email])
+  db.one('SELECT users.*, family.name as family_name FROM users JOIN family ON users.family_id = family.id WHERE email=$1', [req.body.email])
     .then((foundUser) => {
       if (foundUser.email === null) {
         console.log('Unable to find user');

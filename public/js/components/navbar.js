@@ -40,7 +40,7 @@ class NavBar extends React.Component {
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link login">
-              {this.props.user.data.username}
+              {this.props.user.data.name}
             </a>
               <div class="navbar-dropdown">
                 <a class="navbar-item" onClick={()=> this.props.toggleState('displayEditProfile')}>Edit Profile</a>
