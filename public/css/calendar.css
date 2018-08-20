@@ -72,7 +72,7 @@ header #logo .icon {
 main {
   display: block;
   margin: 0 auto;
-  margin-top: 5em;
+  margin-top: 2em;
   max-width: 60em;
 }
 
@@ -243,6 +243,21 @@ main {
   font-size: .7em;
   padding: 4px;
   max-height: 20px;
+}
+
+.icon-add-container {
+  padding: 1em;
+  width: 200px;
+  cursor: pointer;
+}
+
+.icon-add-container:hover {
+  color: var(--main-color);;
+
+}
+
+.icon-add {
+  padding-right: 10px;
 }
 
 .Blue {

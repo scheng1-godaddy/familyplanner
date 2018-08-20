@@ -6,6 +6,7 @@ class Calendar extends React.Component {
       selectedDate: new Date()
     };
   }
+
   /*====================================
     Displays header for calendar
   =====================================*/

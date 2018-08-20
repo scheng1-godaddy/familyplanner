@@ -84,6 +84,19 @@ class App extends React.Component {
     })
   }
   /*====================================
+    Displays controls for calendar
+  =====================================*/
+  displayControls = () => {
+    return (
+      <div className="col col-start">
+        <div className="icon-add-container" onClick={this.prevMonth}>
+          <i class="fas fa-plus-circle icon-add"></i>
+          <span>Add Event</span>
+        </div>
+      </div>
+    )
+  }
+  /*====================================
     Render function
   =====================================*/
   render () {
@@ -106,6 +119,7 @@ class App extends React.Component {
               closeAppt={this.closeAppt}/>
               : null
             }
+            {this.displayControls()}
             <Calendar
               user={this.state.user}
               schedule={this.state.schedule}
