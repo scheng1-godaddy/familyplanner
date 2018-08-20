@@ -20,7 +20,7 @@ class NavBar extends React.Component {
           </div>
         </a>
         <div class="navbar-burger burger" data-target="main-navigation" onClick={() => {
-            this.props.setState({
+            this.setState({
               navActive: !this.state.navActive
             })
           }}>
