@@ -234,7 +234,29 @@ main {
 
 .appt-container {
   position: absolute;
-  top: 18px;
+  top: 20px;
   width: 100%;
-  background-color: yellow;
+  color: white;
+}
+
+.appt{
+  font-size: .7em;
+  padding: 4px;
+  max-height: 20px;
+}
+
+.Blue {
+  background-color: #5A9DE8;
+}
+
+.Blue:hover {
+  background-color: #1f7ae2;
+}
+
+.Pink {
+  background-color: #ED716D;
+}
+
+.Pink:hover{
+  background-color: #e84f4a;
 }

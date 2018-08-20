@@ -3,13 +3,8 @@ class Calendar extends React.Component {
     super(props);
     this.state = {
       currentMonth: new Date(),
-      selectedDate: new Date(),
+      selectedDate: new Date()
     };
-  }
-  componentDidMount() {
-    this.setState({
-      schedule: this.props.schedule
-    })
   }
   /*====================================
     Displays header for calendar
@@ -93,12 +88,9 @@ class Calendar extends React.Component {
             <div className="number">{formattedDate}</div>
 
             <div className="appt-container">
-              { this.props.schedule.map(appt => {
-                  console.log('day is', day);
-                  console.log('appt is', appt);
-                  console.log(dateFns.isSameDay(day, dateFns.parse(appt.start_datetime)));
+              { this.props.schedule.map((appt, index) => {
                   return dateFns.isSameDay(day, dateFns.parse(appt.start_datetime)) ?
-                  "Hello" : null
+                <div className={appt.color_name + " appt"} onClick={()=> this.props.displayAppt(appt, index)}>{appt.name}</div> : null
                 })
               }
             </div>
