@@ -13,16 +13,31 @@ class App extends React.Component {
           name: "Shawn",
           password: "$2b$10$O.RScnErnvR8gVqBu/mKmeyuvBJreA6FjnWe6ln1o2hdMKDClkeBK"
         }
-      }
+      },
+      schedule: []
     }
   }
   componentDidMount() {
-    (this.state.user && this.state.user.data) ? null : this.checkSession();
+    (this.state.user && this.state.user.data) ? this.getSchedule() : this.checkSession();
   }
   checkSession = () => {
     fetch('/sessions')
       .then(response => response.json())
-      .then(responseJson => this.setUser(responseJson))
+      .then(responseJson => {this.setUser(responseJson); this.getSchedule();})
+      .catch(error => {
+      console.log(error);
+    })
+  }
+  getSchedule = () => {
+    console.log('Getting schedule');
+    fetch('/schedule/family/' + this.state.user.data.family_id)
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('Got schedule', responseJson);
+        this.setState({
+          schedule: responseJson.data
+        })
+      })
       .catch(error => {
       console.log(error);
     })

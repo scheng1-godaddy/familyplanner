@@ -31,6 +31,7 @@ CREATE TABLE events (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   description TEXT,
+  location TEXT,
   eventtype_id INT
 );
 

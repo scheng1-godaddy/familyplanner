@@ -28,16 +28,31 @@ router.post('/', (req, res, next) => {
 
 /*============================================
   INDEX ROUTE
-  - Get all scheduled events
+  - Get all scheduled events based on family ID
 ============================================*/
-router.get('/', (req, res, next) => {
-  console.log('Getting all scheduled events');
-  db.any('SELECT * FROM schedule')
+router.get('/family/:id', (req, res, next) => {
+  console.log('Getting all scheduled events for family ID:', req.params.id);
+  db.any('SELECT schedule.*, '+
+  'events.name, '+
+  'events.description, '+
+  'events.location, '+
+  'eventtype.name as eventtype_name, '+
+  'eventcolor.name as color_name, '+
+  'eventcolor.value as event_color, '+
+  'family.name as family_name, '+
+  'users.name as creator_name ' +
+  'FROM schedule '+
+  'JOIN events ON schedule.event_id = events.id '+
+  'JOIN eventtype ON events.eventtype_id = eventtype.id '+
+  'JOIN eventcolor ON eventtype.color_id = eventcolor.id '+
+  'JOIN family ON schedule.family_id = family.id '+
+  'JOIN users ON schedule.creator_id = users.id '+
+  'WHERE schedule.family_id = $1', [req.params.id])
     .then((data) => {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved all scheduled events'
+        message: 'Retrieved all scheduled events based on family ID'
       });
     }).catch((err) => {
       return next(err);
@@ -50,7 +65,22 @@ router.get('/', (req, res, next) => {
 ============================================*/
 router.get('/:id', (req, res, next) => {
   console.log('Getting scheduled event with id', req.params.id);
-  db.one('SELECT * FROM schedule WHERE id=$1', [req.params.id])
+  db.one('SELECT schedule.*, '+
+  'events.name, '+
+  'events.description, '+
+  'events.location, '+
+  'eventtype.name as eventtype_name, '+
+  'eventcolor.name as color_name, '+
+  'eventcolor.value as event_color, '+
+  'family.name as family_name, '+
+  'users.name as creator_name ' +
+  'FROM schedule '+
+  'JOIN events ON schedule.event_id = events.id '+
+  'JOIN eventtype ON events.eventtype_id = eventtype.id '+
+  'JOIN eventcolor ON eventtype.color_id = eventcolor.id '+
+  'JOIN family ON schedule.family_id = family.id '+
+  'JOIN users ON schedule.creator_id = users.id '+
+  'WHERE schedule.id = $1', [req.params.id])
     .then((data) => {
       res.status(200).json({
         status: 'success',
