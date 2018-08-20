@@ -38,6 +38,9 @@ app.use('/eventtype', eventtypeController);
 
 const eventsController = require('./controllers/events.js');
 app.use('/events', eventsController);
+
+const scheduleController = require('./controllers/schedule.js');
+app.use('/schedule', scheduleController);
 /*=====================================
   Constants
 =====================================*/
