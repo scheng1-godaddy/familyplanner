@@ -3,7 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
-.icon {
+/* .icon {
   font-family: 'Material Icons', serif;
   font-style: normal;
   display: inline-block;
@@ -14,12 +14,13 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
+  padding-right: 10px;
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'liga';
-}
+} */
 
 
 /* VARIABLES */
@@ -46,7 +47,6 @@ body {
     font-weight: 300;
     line-height: 1.5;
     color: var(--text-color);
-    background: var(--bg-color);
     position: relative;
 }
 
@@ -73,7 +73,7 @@ main {
   display: block;
   margin: 0 auto;
   margin-top: 5em;
-  max-width: 50em;
+  max-width: 60em;
 }
 
 
@@ -126,8 +126,7 @@ main {
 
 .calendar .header {
   text-transform: uppercase;
-  font-weight: 700;
-  font-size: 115%;
+  font-size: 150%;
   padding: 1.5em 0;
   border-bottom: 1px solid var(--border-color);
 }
@@ -162,7 +161,7 @@ main {
 
 .calendar .body .cell {
   position: relative;
-  height: 5em;
+  height: 6.5em;
   border-right: 1px solid var(--border-color);
   overflow: hidden;
   cursor: pointer;
@@ -195,11 +194,13 @@ main {
 
 .calendar .body .cell .number {
   position: absolute;
-  font-size: 82.5%;
+  font-size: 75%;
   line-height: 1;
-  top: .75em;
-  right: .75em;
   font-weight: 700;
+}
+
+.number {
+  background-color: white;
 }
 
 .calendar .body .disabled {

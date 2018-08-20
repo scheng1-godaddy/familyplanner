@@ -13,7 +13,7 @@ const router = express.Router();
 ============================================*/
 router.post('/', (req, res, next) => {
   console.log('Creating new session', req.body);
-  db.one('SELECT * FROM users WHERE email=$1', [req.body.email])
+  db.one('SELECT users.*, family.name as family_name FROM users JOIN family ON users.family_id = family.id WHERE email=$1', [req.body.email])
     .then((foundUser) => {
       if (foundUser.email === null) {
         console.log('Unable to find user');
@@ -32,7 +32,8 @@ router.post('/', (req, res, next) => {
           req.session.currentUser = foundUser
           res.status(201).json({
             status: 201,
-            message: "Session created"
+            message: "Session created",
+            data: foundUser
           })
         } else {
           // Password didn't match
@@ -50,7 +51,11 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res) => {
   if(req.session.currentUser) {
     console.log('User session exists', req.session.currentUser);
-    res.json(req.session.currentUser);
+    res.status(200).json({
+      status: 200,
+      message: "Retrieved session information",
+      data: req.session.currentUser
+    });
   } else {
     res.status(401).json({
       status: 401,
