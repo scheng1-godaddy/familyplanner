@@ -64,7 +64,10 @@ class App extends React.Component {
               </div>
             </header>
           <main>
-            <Calendar user={this.state.user}/>
+            <Calendar
+              user={this.state.user}
+              schedule={this.state.schedule}
+              />
           </main>
         </div>
       : <FrontPage setUser={this.setUser}/>

@@ -231,3 +231,10 @@ main {
   flex-basis: calc(100%/7);
   width: calc(100%/7);
 }
+
+.appt-container {
+  position: absolute;
+  top: 18px;
+  width: 100%;
+  background-color: yellow;
+}
