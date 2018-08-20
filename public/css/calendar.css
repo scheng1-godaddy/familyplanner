@@ -231,3 +231,32 @@ main {
   flex-basis: calc(100%/7);
   width: calc(100%/7);
 }
+
+.appt-container {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  color: white;
+}
+
+.appt{
+  font-size: .7em;
+  padding: 4px;
+  max-height: 20px;
+}
+
+.Blue {
+  background-color: #5A9DE8;
+}
+
+.Blue:hover {
+  background-color: #1f7ae2;
+}
+
+.Pink {
+  background-color: #ED716D;
+}
+
+.Pink:hover{
+  background-color: #e84f4a;
+}

@@ -13,7 +13,7 @@ const router = express.Router();
 ============================================*/
 router.post('/', (req, res, next) => {
   console.log('Creating new event type:', req.body);
-  db.one('INSERT INTO events (name, description, eventtype_id) VALUES (${name}, ${description}, ${eventtype_id}) RETURNING id, name, description, eventtype_id', req.body)
+  db.one('INSERT INTO events (name, description, location, eventtype_id) VALUES (${name}, ${description}, ${location}, ${eventtype_id}) RETURNING id, name, description, eventtype_id', req.body)
     .then((data) => {
       console.log('Successfully created event:', res);
       res.status(200).json({

@@ -1,9 +1,6 @@
 class Calendar extends React.Component {
   constructor(props) {
     super(props);
-    this.dateClickHandler = this.dateClickHandler.bind(this);
-    this.nextMonth = this.nextMonth.bind(this);
-    this.prevMonth = this.prevMonth.bind(this);
     this.state = {
       currentMonth: new Date(),
       selectedDate: new Date()
@@ -88,8 +85,15 @@ class Calendar extends React.Component {
             key={day}
             onClick={() => this.dateClickHandler(dateFns.parse(cloneDay))}
           >
-            <span className="number">{formattedDate}</span>
-            <span className="bg"></span>
+            <div className="number">{formattedDate}</div>
+
+            <div className="appt-container">
+              { this.props.schedule.map((appt, index) => {
+                  return dateFns.isSameDay(day, dateFns.parse(appt.start_datetime)) ?
+                <div className={appt.color_name + " appt"} onClick={()=> this.props.displayAppt(appt, index)}>{appt.name}</div> : null
+                })
+              }
+            </div>
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -122,10 +126,14 @@ class Calendar extends React.Component {
   /*====================================
     Displays cells for calendar
   =====================================*/
-  prevMonth() {
+  prevMonth = () => {
     this.setState({
       currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
     });
+  }
+  checkSchedule = () => {
+    // console.log('start is', this.props.schedule[0].start_datetime);
+    // console.log('parsed start', dateFns.parse(this.props.schedule[0].start_datetime));
   }
   /*====================================
     Render Function

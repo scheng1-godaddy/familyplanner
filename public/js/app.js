@@ -13,24 +13,74 @@ class App extends React.Component {
           name: "Shawn",
           password: "$2b$10$O.RScnErnvR8gVqBu/mKmeyuvBJreA6FjnWe6ln1o2hdMKDClkeBK"
         }
-      }
+      },
+      schedule: [],
+      showAppt: false,
+      selectedAppt: null,
+      selectedIndex: null
     }
   }
+  /*====================================
+    Things to do during load
+  =====================================*/
   componentDidMount() {
-    (this.state.user && this.state.user.data) ? null : this.checkSession();
+    (this.state.user && this.state.user.data) ? this.getSchedule() : this.checkSession();
   }
+  /*====================================
+   Check server for active user session
+  =====================================*/
   checkSession = () => {
     fetch('/sessions')
       .then(response => response.json())
-      .then(responseJson => this.setUser(responseJson))
+      .then(responseJson => {this.setUser(responseJson); this.getSchedule();})
       .catch(error => {
       console.log(error);
     })
   }
+  /*====================================
+    Gets all scheduled appts based family id
+  =====================================*/
+  getSchedule = () => {
+    console.log('Getting schedule');
+    fetch('/schedule/family/' + this.state.user.data.family_id)
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('Got schedule', responseJson);
+        this.setState({
+          schedule: responseJson.data
+        })
+      })
+      .catch(error => {
+      console.log(error);
+    })
+  }
+  /*====================================
+    Sets the current user
+  =====================================*/
   setUser = (user) => {
     console.log('Setting user', user);
     this.setState({
       user: user
+    })
+  }
+  /*====================================
+    Displays appointment selected
+  =====================================*/
+  displayAppt = (appt, index) => {
+    this.setState({
+      selectedAppt: appt,
+      selectedIndex: index,
+      showAppt: true
+    })
+  }
+  /*====================================
+    Close appointment selected
+  =====================================*/
+  closeAppt = () => {
+    this.setState({
+      selectedAppt: null,
+      selectedIndex: null,
+      showAppt: false
     })
   }
   /*====================================
@@ -49,7 +99,18 @@ class App extends React.Component {
               </div>
             </header>
           <main>
-            <Calendar user={this.state.user}/>
+            {
+              (this.state.showAppt)
+              ? <ShowAppt
+              appt={this.state.selectedAppt}
+              closeAppt={this.closeAppt}/>
+              : null
+            }
+            <Calendar
+              user={this.state.user}
+              schedule={this.state.schedule}
+              displayAppt={this.displayAppt}
+              />
           </main>
         </div>
       : <FrontPage setUser={this.setUser}/>
