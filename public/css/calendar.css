@@ -48,6 +48,7 @@ body {
     line-height: 1.5;
     color: var(--text-color);
     position: relative;
+    background-color: var(--bg-color);
 }
 
 header {
@@ -72,7 +73,6 @@ header #logo .icon {
 main {
   display: block;
   margin: 0 auto;
-  margin-top: 2em;
   max-width: 60em;
 }
 
@@ -246,18 +246,30 @@ main {
 }
 
 .icon-add-container {
-  padding: 1em;
+  padding: 1.5em;
   width: 200px;
   cursor: pointer;
+  transition: all .2s ease-in-out;
 }
 
 .icon-add-container:hover {
-  color: var(--main-color);;
+  color: var(--main-color);
+  transform: scale(1.2) translateX(5px);
 
+}
+
+.icon-add-container:hover .add{
+  display: inline;
+
+}
+
+.add {
+  display: none;
 }
 
 .icon-add {
   padding-right: 10px;
+  font-size: 1.5em;
 }
 
 .Blue {

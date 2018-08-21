@@ -90,8 +90,8 @@ class App extends React.Component {
     return (
       <div className="col col-start">
         <div className="icon-add-container" onClick={this.prevMonth}>
-          <i class="fas fa-plus-circle icon-add"></i>
-          <span>Add Event</span>
+          <i className="fas fa-plus-circle icon-add"></i>
+          <span className="add">ADD EVENT</span>
         </div>
       </div>
     )
@@ -107,7 +107,7 @@ class App extends React.Component {
             <header>
               <div id="logo">
                 <span>
-                  {this.state.user.data.family_name}
+                  <b>{this.state.user.data.family_name.toUpperCase()}</b>
                 </span>
               </div>
             </header>

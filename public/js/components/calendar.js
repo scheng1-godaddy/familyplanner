@@ -132,10 +132,6 @@ class Calendar extends React.Component {
       currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
     });
   }
-  checkSchedule = () => {
-    // console.log('start is', this.props.schedule[0].start_datetime);
-    // console.log('parsed start', dateFns.parse(this.props.schedule[0].start_datetime));
-  }
   /*====================================
     Render Function
   =====================================*/
