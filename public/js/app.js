@@ -16,6 +16,7 @@ class App extends React.Component {
       },
       schedule: [],
       showAppt: false,
+      showAddApptForm: false,
       selectedAppt: null,
       selectedIndex: null
     }
@@ -25,6 +26,17 @@ class App extends React.Component {
   =====================================*/
   componentDidMount() {
     (this.state.user && this.state.user.data) ? this.getSchedule() : this.checkSession();
+  }
+  /*=======================
+  Toggles any of the booleans in state
+  =======================*/
+  toggleState = (...st) => {
+    console.log('Toggle State called');
+    let toUpdate = {}
+    for (let key of st) {
+      toUpdate[key] = !this.state[key]
+    }
+    this.setState(toUpdate)
   }
   /*====================================
    Check server for active user session
@@ -86,15 +98,8 @@ class App extends React.Component {
   /*====================================
     Displays controls for calendar
   =====================================*/
-  displayControls = () => {
-    return (
-      <div className="col col-start">
-        <div className="icon-add-container" onClick={this.prevMonth}>
-          <i className="fas fa-plus-circle icon-add"></i>
-          <span className="add">ADD EVENT</span>
-        </div>
-      </div>
-    )
+  addAppt = (appt) => {
+    console.log('Calling add appointment');
   }
   /*====================================
     Render function
@@ -119,11 +124,18 @@ class App extends React.Component {
               closeAppt={this.closeAppt}/>
               : null
             }
-            {this.displayControls()}
+            {
+              (this.state.showAddApptForm)
+              ? <AddAppt
+                toggleState={this.toggleState}/>
+              : null
+            }
             <Calendar
               user={this.state.user}
               schedule={this.state.schedule}
               displayAppt={this.displayAppt}
+              addAppt={this.addAppt}
+              toggleState={this.toggleState}
               />
           </main>
         </div>

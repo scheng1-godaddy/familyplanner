@@ -6,7 +6,19 @@ class Calendar extends React.Component {
       selectedDate: new Date()
     };
   }
-
+  /*====================================
+    Displays controls for calendar
+  =====================================*/
+  displayControls = () => {
+    return (
+      <div className="col col-start">
+        <div className="icon-add-container" onClick={() => this.addApptHandler()}>
+          <i className="fas fa-plus-circle icon-add"></i>
+          <span className="add">ADD EVENT</span>
+        </div>
+      </div>
+    )
+  }
   /*====================================
     Displays header for calendar
   =====================================*/
@@ -133,14 +145,25 @@ class Calendar extends React.Component {
     });
   }
   /*====================================
+    Handler to add appointment
+  =====================================*/
+  addApptHandler = () => {
+    // Show appointment window
+    this.props.toggleState('showAddApptForm')
+    this.props.addAppt();
+  }
+  /*====================================
     Render Function
   =====================================*/
   render() {
     return (
-      <div className="calendar">
-        {this.displayHeader()}
-        {this.displayDayOfWeek()}
-        {this.displayCells()}
+      <div>
+        {this.displayControls()}
+        <div className="calendar">
+          {this.displayHeader()}
+          {this.displayDayOfWeek()}
+          {this.displayCells()}
+        </div>
       </div>
     );
   }
