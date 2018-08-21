@@ -1,6 +1,16 @@
+import DatePicker from 'react-datepicker';
+
 class AddAppt extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      startDate: moment()
+    }
+  }
+  handleChange = (date) => {
+    this.setState({
+      startDate: date
+    });
   }
   render() {
     return (
@@ -9,14 +19,22 @@ class AddAppt extends React.Component {
         <div class="modal-card">
           <header class="modal-card-head">
             <p class="modal-card-title">Modal title</p>
-            <button class="delete" aria-label="close"></button>
+            <button onClick={() => this.props.toggleState('showAddApptForm')} class="delete" aria-label="close"></button>
           </header>
           <section class="modal-card-body">
-            <p>Hello </p>
+            <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="LLL"
+                timeCaption="time"
+            />
           </section>
           <footer class="modal-card-foot">
             <button class="button is-success">Save changes</button>
-            <button class="button">Cancel</button>
+            <button onClick={() => this.props.toggleState('showAddApptForm')} class="button">Cancel</button>
           </footer>
         </div>
       </div>

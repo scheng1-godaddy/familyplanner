@@ -149,7 +149,7 @@ class Calendar extends React.Component {
   =====================================*/
   addApptHandler = () => {
     // Show appointment window
-    this.props.toggleState('showAddApptForm')
+    this.props.toggleState('showAddApptForm');
     this.props.addAppt();
   }
   /*====================================
