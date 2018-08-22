@@ -9,16 +9,16 @@ const router = express.Router();
 
 /*============================================
   CREATE ROUTE
-  - Create new event with POST
+  - Create new category with POST
 ============================================*/
 router.post('/', (req, res, next) => {
-  console.log('Creating new event type:', req.body);
-  db.one('INSERT INTO events (name, description, location, eventtype_id) VALUES (${name}, ${description}, ${location}, ${eventtype_id}) RETURNING id, name, description, eventtype_id', req.body)
+  console.log('Creating new category:', req.body);
+  db.one('INSERT INTO category (name, color_id) VALUES (${name}, ${color_id}) RETURNING id, name, color_id', req.body)
     .then((data) => {
-      console.log('Successfully created event:', res);
+      console.log('Successfully created category:', res);
       res.status(200).json({
         status: 'success',
-        message: 'Created event',
+        message: 'Created category',
         data: data
       })
     }).catch(error => {
@@ -28,16 +28,16 @@ router.post('/', (req, res, next) => {
 
 /*============================================
   INDEX ROUTE
-  - Get all events
+  - Get all categorys
 ============================================*/
 router.get('/', (req, res, next) => {
-  console.log('Getting all event');
-  db.any('SELECT * FROM events')
+  console.log('Getting all category');
+  db.any('SELECT * FROM category')
     .then((data) => {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved all events'
+        message: 'Retrieved all categories'
       });
     }).catch((err) => {
       return next(err);
@@ -46,16 +46,16 @@ router.get('/', (req, res, next) => {
 
 /*============================================
   Show ROUTE
-  - Get one event based on id
+  - Get one category based on id
 ============================================*/
 router.get('/:id', (req, res, next) => {
-  console.log('Getting event with id', req.params.id);
-  db.one('SELECT * FROM events WHERE id=$1', [req.params.id])
+  console.log('Getting category with id', req.params.id);
+  db.one('SELECT * FROM category WHERE id=$1', [req.params.id])
     .then((data) => {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved event with id: ' + req.params.id
+        message: 'Retrieved category with id: ' + req.params.id
       });
     }).catch((err) => {
       return next(err);

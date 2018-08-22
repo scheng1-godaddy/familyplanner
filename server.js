@@ -36,8 +36,8 @@ app.use('/sessions', sessionsController);
 const eventtypeController = require('./controllers/eventtype.js');
 app.use('/eventtype', eventtypeController);
 
-const eventsController = require('./controllers/events.js');
-app.use('/events', eventsController);
+const categoryController = require('./controllers/category.js');
+app.use('/category', categoryController);
 
 const scheduleController = require('./controllers/schedule.js');
 app.use('/schedule', scheduleController);
