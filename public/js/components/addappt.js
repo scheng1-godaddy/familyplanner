@@ -1,5 +1,3 @@
-import DatePicker from 'react-datepicker';
-
 class AddAppt extends React.Component {
   constructor(props) {
     super(props)
@@ -22,15 +20,7 @@ class AddAppt extends React.Component {
             <button onClick={() => this.props.toggleState('showAddApptForm')} class="delete" aria-label="close"></button>
           </header>
           <section class="modal-card-body">
-            <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                dateFormat="LLL"
-                timeCaption="time"
-            />
+            <DatePicker/>
           </section>
           <footer class="modal-card-foot">
             <button class="button is-success">Save changes</button>
