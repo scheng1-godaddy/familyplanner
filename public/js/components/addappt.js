@@ -2,7 +2,7 @@ class AddAppt extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: moment()
+      startDate: null
     }
   }
   handleChange = (date) => {
@@ -23,6 +23,7 @@ class AddAppt extends React.Component {
             <div class="add-appt-body">
               <DatePicker
                 placeholderText="Start Date and Time"
+                selected={this.state.startDate}
                 onChange={this.handleChange}
                 minDate={moment()}
                 minTime={moment()}
