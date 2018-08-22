@@ -4,3 +4,7 @@
   height: 100%;
   padding: 1em;
 }
+
+.add-appt-body {
+  min-height: 800px;
+}
