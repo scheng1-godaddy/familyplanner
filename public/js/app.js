@@ -14,6 +14,8 @@ class App extends React.Component {
           password: "$2b$10$O.RScnErnvR8gVqBu/mKmeyuvBJreA6FjnWe6ln1o2hdMKDClkeBK"
         }
       },
+      colors: [],
+      categories: [],
       schedule: [],
       showAppt: false,
       showAddApptForm: false,
@@ -26,6 +28,8 @@ class App extends React.Component {
   =====================================*/
   componentDidMount() {
     (this.state.user && this.state.user.data) ? this.getSchedule() : this.checkSession();
+    this.getColors();
+    this.getCategories();
   }
   /*=======================
   Toggles any of the booleans in state
@@ -44,7 +48,10 @@ class App extends React.Component {
   checkSession = () => {
     fetch('/sessions')
       .then(response => response.json())
-      .then(responseJson => {this.setUser(responseJson); this.getSchedule();})
+      .then(responseJson => {
+        this.setUser(responseJson);
+        this.getSchedule();
+      })
       .catch(error => {
       console.log(error);
     })
@@ -102,6 +109,40 @@ class App extends React.Component {
     console.log('Calling add appointment');
   }
   /*====================================
+    Get colors
+  =====================================*/
+  getColors = () => {
+    console.log('Calling getColors');
+    fetch('/colors')
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('Got colors', responseJson);
+        this.setState({
+          colors: responseJson.data
+        })
+      })
+      .catch(error => {
+      console.log(error);
+    })
+  }
+  /*====================================
+    Get colors
+  =====================================*/
+  getCategories = () => {
+    console.log('Calling getCategories');
+    fetch('/category/family/' + + this.state.user.data.family_id)
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('Got colors', responseJson);
+        this.setState({
+          categories: responseJson.data
+        })
+      })
+      .catch(error => {
+      console.log(error);
+    })
+  }
+  /*====================================
     Render function
   =====================================*/
   render () {
@@ -127,7 +168,9 @@ class App extends React.Component {
             {
               (this.state.showAddApptForm)
               ? <AddAppt
-                toggleState={this.toggleState}/>
+                toggleState={this.toggleState}
+                colors={this.state.colors}
+                categories={this.state.categories}/>
               : null
             }
             <Calendar

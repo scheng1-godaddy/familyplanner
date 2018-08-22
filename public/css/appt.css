@@ -6,12 +6,21 @@
 }
 
 .add-appt-body {
-  min-height: 300px;
+  min-height: 350px;
 }
 
 .datefield{
   display: flex;
   justify-content: space-around;
+}
+
+.locationfield {
+  display: flex;
+  justify-content: space-between;
+}
+
+.locinput {
+  width: 22em;
 }
 
 .field-section {

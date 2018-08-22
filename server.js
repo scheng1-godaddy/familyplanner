@@ -38,6 +38,9 @@ app.use('/category', categoryController);
 
 const appointmentsController = require('./controllers/appointments.js');
 app.use('/appointments', appointmentsController);
+
+const colorsController = require('./controllers/colors.js');
+app.use('/colors', colorsController);
 /*=====================================
   Constants
 =====================================*/

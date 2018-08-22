@@ -422,11 +422,10 @@
 .react-datepicker__input-container {
   position: relative;
   display: inline-block;
-  width: 300px;
 }
 
 .react-datepicker__input-container input {
-  width: 300px;
+  width: 27em;
   line-height: 16px;
   padding: 5px;
 }
