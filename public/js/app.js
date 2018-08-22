@@ -54,7 +54,7 @@ class App extends React.Component {
   =====================================*/
   getSchedule = () => {
     console.log('Getting schedule');
-    fetch('/schedule/family/' + this.state.user.data.family_id)
+    fetch('/appointments/family/' + this.state.user.data.family_id)
       .then(response => response.json())
       .then(responseJson => {
         console.log('Got schedule', responseJson);

@@ -103,7 +103,7 @@ class Calendar extends React.Component {
             <div className="appt-container">
               { this.props.schedule.map((appt, index) => {
                   return dateFns.isSameDay(day, dateFns.parse(appt.start_datetime)) ?
-                <div className={appt.color_name + " appt"} onClick={()=> this.props.displayAppt(appt, index)}>{appt.name}</div> : null
+                <div className={appt.color + " appt"} onClick={()=> this.props.displayAppt(appt, index)}>{appt.name}</div> : null
                 })
               }
             </div>

@@ -287,3 +287,27 @@ main {
 .Pink:hover{
   background-color: #e84f4a;
 }
+
+.Green {
+  background-color: #29c413;
+}
+
+.Green:hover {
+  background-color: #4adb36;
+}
+
+.Orange {
+  background-color: #d88c00;
+}
+
+.Orange:hover {
+  background-color: #E8A10E;
+}
+
+.Red {
+  background-color: #b72626;
+}
+
+.Red:hover {
+  background-color: #f90000;
+}
