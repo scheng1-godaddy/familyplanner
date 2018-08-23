@@ -19,6 +19,7 @@ class App extends React.Component {
       schedule: [],
       showAppt: false,
       showAddApptForm: false,
+      showEditApptForm: false,
       selectedAppt: null,
       selectedIndex: null
     }
@@ -141,6 +142,44 @@ class App extends React.Component {
       .catch(error => console.log(error))
   }
   /*====================================
+    Updates Appointment
+  =====================================*/
+  updateAppt = (appt) => {
+    console.log('calling updateAppt', appt);
+    // Add to database
+    fetch('/appointments/' + this.state.selectedAppt.id, {
+      body: JSON.stringify(appt),
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        let newAppt = responseJson.data
+        let category = this.state.categories.find((category) => {
+          return category.id == newAppt.category_id
+        });
+        newAppt["category"] = category.name;
+        let color = this.state.colors.find((color) => {
+          return color.id == category.color_id
+        });
+        newAppt["color"] = color.name
+        newAppt["creator_name"] = this.state.user.data.name;
+        console.log('Final format for new appointment:', newAppt);
+        let newArr = this.state.schedule;
+        newArr[this.state.selectedIndex] = newAppt
+        this.setState({
+          schedule: newArr,
+          showEditApptForm: false
+        })
+      })
+      .catch(error => console.log(error))
+  }
+  /*====================================
     Delete appointment
   =====================================*/
   deleteAppt = () => {
@@ -241,8 +280,21 @@ class App extends React.Component {
               ? <ShowAppt
               appt={this.state.selectedAppt}
               index={this.state.selectedIndex}
+              toggleState={this.toggleState}
               closeAppt={this.closeAppt}
               deleteAppt={this.deleteAppt}/>
+              : null
+            }
+            {
+              (this.state.showEditApptForm)
+              ? <EditAppt
+                toggleState={this.toggleState}
+                colors={this.state.colors}
+                categories={this.state.categories}
+                user={this.state.user.data}
+                addCategory={this.addCategory}
+                appt={this.state.selectedAppt}
+                updateAppt={this.updateAppt}/>
               : null
             }
             {
