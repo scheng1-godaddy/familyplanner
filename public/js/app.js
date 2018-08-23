@@ -14,6 +14,8 @@ class App extends React.Component {
           password: "$2b$10$O.RScnErnvR8gVqBu/mKmeyuvBJreA6FjnWe6ln1o2hdMKDClkeBK"
         }
       },
+      colors: [],
+      categories: [],
       schedule: [],
       showAppt: false,
       showAddApptForm: false,
@@ -26,6 +28,8 @@ class App extends React.Component {
   =====================================*/
   componentDidMount() {
     (this.state.user && this.state.user.data) ? this.getSchedule() : this.checkSession();
+    this.getColors();
+    this.getCategories();
   }
   /*=======================
   Toggles any of the booleans in state
@@ -44,7 +48,10 @@ class App extends React.Component {
   checkSession = () => {
     fetch('/sessions')
       .then(response => response.json())
-      .then(responseJson => {this.setUser(responseJson); this.getSchedule();})
+      .then(responseJson => {
+        this.setUser(responseJson);
+        this.getSchedule();
+      })
       .catch(error => {
       console.log(error);
     })
@@ -96,10 +103,122 @@ class App extends React.Component {
     })
   }
   /*====================================
-    Displays controls for calendar
+    Adds Appointment
   =====================================*/
   addAppt = (appt) => {
-    console.log('Calling add appointment');
+    console.log('Calling add appointment', appt);
+    // Add to database
+    fetch('/appointments', {
+      body: JSON.stringify(appt),
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        let newAppt = responseJson.data
+        let category = this.state.categories.find((category) => {
+          return category.id == newAppt.category_id
+        });
+        newAppt["category"] = category.name;
+        let color = this.state.colors.find((color) => {
+          return color.id == category.color_id
+        });
+        newAppt["color"] = color.name
+        newAppt["creator_name"] = this.state.user.data.name;
+        console.log('Final format for new appointment:', newAppt);
+        let newArr = this.state.schedule;
+        newArr.push(newAppt)
+        this.setState({
+          schedule: newArr,
+          showAddApptForm: false
+        })
+      })
+      .catch(error => console.log(error))
+  }
+  /*====================================
+    Delete appointment
+  =====================================*/
+  deleteAppt = () => {
+    console.log('calling deleteAppt', this.state.selectedAppt);
+    fetch('/appointments/'+this.state.selectedAppt.id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      this.setState({
+        schedule: [
+          ...this.state.schedule.slice(0, this.state.selectedIndex),
+          ...this.state.schedule.slice(this.state.selectedIndex + 1)
+        ],
+        showAppt: false
+      })
+    }).catch(error => console.log(error))
+  }
+  /*====================================
+    Adds category
+  =====================================*/
+  addCategory = (category) => {
+    console.log('Calling addCategory', category);
+    // Add to database
+    fetch('/category', {
+      body: JSON.stringify(category),
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        let newArr = this.state.categories;
+        newArr.push(responseJson.data)
+        this.setState({
+          categories: newArr
+        })
+      })
+      .catch(error => console.log(error))
+  }
+  /*====================================
+    Get colors
+  =====================================*/
+  getColors = () => {
+    console.log('Calling getColors');
+    fetch('/colors')
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('Got colors', responseJson);
+        this.setState({
+          colors: responseJson.data
+        })
+      })
+      .catch(error => {
+      console.log(error);
+    })
+  }
+  /*====================================
+    Get colors
+  =====================================*/
+  getCategories = () => {
+    console.log('Calling getCategories');
+    fetch('/category/family/' + + this.state.user.data.family_id)
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('Got colors', responseJson);
+        this.setState({
+          categories: responseJson.data
+        })
+      })
+      .catch(error => {
+      console.log(error);
+    })
   }
   /*====================================
     Render function
@@ -121,13 +240,20 @@ class App extends React.Component {
               (this.state.showAppt)
               ? <ShowAppt
               appt={this.state.selectedAppt}
-              closeAppt={this.closeAppt}/>
+              index={this.state.selectedIndex}
+              closeAppt={this.closeAppt}
+              deleteAppt={this.deleteAppt}/>
               : null
             }
             {
               (this.state.showAddApptForm)
               ? <AddAppt
-                toggleState={this.toggleState}/>
+                toggleState={this.toggleState}
+                colors={this.state.colors}
+                categories={this.state.categories}
+                user={this.state.user.data}
+                addCategory={this.addCategory}
+                addAppt={this.addAppt}/>
               : null
             }
             <Calendar

@@ -13,7 +13,7 @@ const router = express.Router();
 ============================================*/
 router.post('/', (req, res, next) => {
   console.log('Creating new category:', req.body);
-  db.one('INSERT INTO category (name, color_id) VALUES (${name}, ${color_id}) RETURNING id, name, color_id', req.body)
+  db.one('INSERT INTO category (name, family_id, color_id) VALUES (${name}, ${family_id}, ${color_id}) RETURNING id, name, family_id, color_id', req.body)
     .then((data) => {
       console.log('Successfully created category:', res);
       res.status(200).json({
@@ -28,11 +28,11 @@ router.post('/', (req, res, next) => {
 
 /*============================================
   INDEX ROUTE
-  - Get all categorys
+  - Get all categories based on family ID
 ============================================*/
-router.get('/', (req, res, next) => {
+router.get('/family/:id', (req, res, next) => {
   console.log('Getting all category');
-  db.any('SELECT * FROM category')
+  db.any('SELECT * FROM category WHERE family_id=$1', [req.params.id])
     .then((data) => {
       res.status(200).json({
         status: 'success',

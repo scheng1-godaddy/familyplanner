@@ -16,16 +16,6 @@ CREATE TABLE family (
   name VARCHAR(255)
 );
 
--- CREATE TABLE schedule (
---   id SERIAL PRIMARY KEY,
---   start_datetime TIMESTAMP,
---   end_datetime TIMESTAMP,
---   event_id INT,
---   creator_id INT,
---   family_id INT,
---   recurring VARCHAR(255),
---   is_recurring BOOLEAN
--- );
 CREATE TABLE appointment (
   id SERIAL PRIMARY KEY,
   start_datetime TIMESTAMP,
@@ -43,6 +33,7 @@ CREATE TABLE appointment (
 CREATE TABLE category (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
+  family_id INT,
   color_id INT
 );
 

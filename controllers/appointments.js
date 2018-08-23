@@ -15,7 +15,7 @@ router.post('/', (req, res, next) => {
   console.log('Creating new appointments entry:', req.body);
   db.one('INSERT INTO appointment '+
   '(start_datetime, end_datetime, name, description, location, creator_id, family_id, category_id, recurring,  is_recurring) '+
-  'VALUES (${start_datetime}, ${end_datetime}, ${name}, ${description}, ${location}, ${creator_id}, ${category_id}, ${family_id}, ${recurring},  ${is_recurring}) RETURNING id, start_datetime, end_datetime, name, description, location, creator_id, category_id family_id, recurring,  is_recurring', req.body)
+  'VALUES (${start_datetime}, ${end_datetime}, ${name}, ${description}, ${location}, ${creator_id}, ${family_id}, ${category_id}, ${recurring}, ${is_recurring}) RETURNING id, start_datetime, end_datetime, name, description, location, creator_id, family_id, category_id, recurring, is_recurring', req.body)
     .then((data) => {
       console.log('Successfully created appointment:', res);
       res.status(200).json({
@@ -113,11 +113,10 @@ router.put('/:id', (req, res, next) => {
 ============================================*/
 router.delete('/:id', (req, res, next) => {
   console.log('Deleting appointments event with id', req.params.id);
-  db.one('DELETE FROM appointment WHERE id=$1', [req.params.id])
-    .then((data) => {
+  db.none('DELETE FROM appointment WHERE id=$1', [req.params.id])
+    .then(() => {
       res.status(200).json({
         status: 'success',
-        data: data,
         message: 'Deleted appointments event with id: ' + req.params.id
       });
     }).catch((err) => {
