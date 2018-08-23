@@ -48,6 +48,7 @@ body {
     line-height: 1.5;
     color: var(--text-color);
     position: relative;
+    background-color: var(--bg-color);
 }
 
 header {
@@ -72,7 +73,6 @@ header #logo .icon {
 main {
   display: block;
   margin: 0 auto;
-  margin-top: 5em;
   max-width: 60em;
 }
 
@@ -243,6 +243,34 @@ main {
   font-size: .7em;
   padding: 4px;
   max-height: 20px;
+  overflow-y: scroll;
+}
+
+.icon-add-container {
+  padding: 1.5em;
+  width: 200px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.icon-add-container:hover {
+  color: var(--main-color);
+  transform: scale(1.2) translateX(5px);
+
+}
+
+.icon-add-container:hover .add{
+  display: inline;
+
+}
+
+.add {
+  display: none;
+}
+
+.icon-add {
+  padding-right: 10px;
+  font-size: 1.5em;
 }
 
 .Blue {
@@ -259,4 +287,28 @@ main {
 
 .Pink:hover{
   background-color: #e84f4a;
+}
+
+.Green {
+  background-color: #29c413;
+}
+
+.Green:hover {
+  background-color: #4adb36;
+}
+
+.Orange {
+  background-color: #d88c00;
+}
+
+.Orange:hover {
+  background-color: #E8A10E;
+}
+
+.Red {
+  background-color: #b72626;
+}
+
+.Red:hover {
+  background-color: #f90000;
 }

@@ -33,14 +33,14 @@ app.use('/users', userController);
 const sessionsController = require('./controllers/sessions.js');
 app.use('/sessions', sessionsController);
 
-const eventtypeController = require('./controllers/eventtype.js');
-app.use('/eventtype', eventtypeController);
+const categoryController = require('./controllers/category.js');
+app.use('/category', categoryController);
 
-const eventsController = require('./controllers/events.js');
-app.use('/events', eventsController);
+const appointmentsController = require('./controllers/appointments.js');
+app.use('/appointments', appointmentsController);
 
-const scheduleController = require('./controllers/schedule.js');
-app.use('/schedule', scheduleController);
+const colorsController = require('./controllers/colors.js');
+app.use('/colors', colorsController);
 /*=====================================
   Constants
 =====================================*/

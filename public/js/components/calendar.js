@@ -7,6 +7,19 @@ class Calendar extends React.Component {
     };
   }
   /*====================================
+    Displays controls for calendar
+  =====================================*/
+  displayControls = () => {
+    return (
+      <div className="col col-start">
+        <div className="icon-add-container" onClick={() => this.addApptHandler()}>
+          <i className="fas fa-plus-circle icon-add"></i>
+          <span className="add">ADD EVENT</span>
+        </div>
+      </div>
+    )
+  }
+  /*====================================
     Displays header for calendar
   =====================================*/
   displayHeader = () => {
@@ -90,7 +103,7 @@ class Calendar extends React.Component {
             <div className="appt-container">
               { this.props.schedule.map((appt, index) => {
                   return dateFns.isSameDay(day, dateFns.parse(appt.start_datetime)) ?
-                <div className={appt.color_name + " appt"} onClick={()=> this.props.displayAppt(appt, index)}>{appt.name}</div> : null
+                <div className={appt.color + " appt"} onClick={()=> this.props.displayAppt(appt, index)}>{appt.name}</div> : null
                 })
               }
             </div>
@@ -131,19 +144,26 @@ class Calendar extends React.Component {
       currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
     });
   }
-  checkSchedule = () => {
-    // console.log('start is', this.props.schedule[0].start_datetime);
-    // console.log('parsed start', dateFns.parse(this.props.schedule[0].start_datetime));
+  /*====================================
+    Handler to add appointment
+  =====================================*/
+  addApptHandler = () => {
+    // Show appointment window
+    this.props.toggleState('showAddApptForm');
+    this.props.addAppt();
   }
   /*====================================
     Render Function
   =====================================*/
   render() {
     return (
-      <div className="calendar">
-        {this.displayHeader()}
-        {this.displayDayOfWeek()}
-        {this.displayCells()}
+      <div>
+        {this.displayControls()}
+        <div className="calendar">
+          {this.displayHeader()}
+          {this.displayDayOfWeek()}
+          {this.displayCells()}
+        </div>
       </div>
     );
   }
