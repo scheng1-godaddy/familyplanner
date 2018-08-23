@@ -103,10 +103,36 @@ class App extends React.Component {
     })
   }
   /*====================================
-    Displays controls for calendar
+    Adds Appointment
   =====================================*/
   addAppt = (appt) => {
     console.log('Calling add appointment');
+  }
+  /*====================================
+    Adds category
+  =====================================*/
+  addCategory = (category) => {
+    console.log('Calling addCategory', category);
+    // Add to database
+    fetch('/category', {
+      body: JSON.stringify(category),
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        let newArr = this.state.categories;
+        newArr.push(responseJson.data)
+        this.setState({
+          categories: newArr
+        })
+      })
+      .catch(error => console.log(error))
   }
   /*====================================
     Get colors
@@ -170,7 +196,9 @@ class App extends React.Component {
               ? <AddAppt
                 toggleState={this.toggleState}
                 colors={this.state.colors}
-                categories={this.state.categories}/>
+                categories={this.state.categories}
+                user={this.state.user.data}
+                addCategory={this.addCategory}/>
               : null
             }
             <Calendar

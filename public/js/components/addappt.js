@@ -2,12 +2,14 @@ class AddAppt extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apptTitle: null,
-      apptStartDate: null,
-      apptEndDate: null,
-      apptLocation: null,
-      apptCategory: null,
-      apptDescription: null,
+      apptTitle: '',
+      apptStartDate: '',
+      apptEndDate: '',
+      apptLocation: '',
+      apptCategory: '',
+      apptDescription: '',
+      categoryColor: '',
+      categoryName: '',
       createCategory: false,
       newAppt: {}
     }
@@ -33,6 +35,22 @@ class AddAppt extends React.Component {
     this.setState({
       apptEndDate: date
     });
+  }
+  /*=======================
+  This method creates new category
+  =======================*/
+  createCategory = () => {
+    console.log('Creating new category');
+    console.log(this.state.categoryName, this.props.user.id, this.state.categoryColor);
+    let category = {
+      "name": this.state.categoryName,
+      "family_id": this.props.user.id,
+      "color_id": parseInt(this.state.categoryColor.split('-')[0])
+    };
+    this.setState({
+      createCategory: false
+    });
+    this.props.addCategory(category);
   }
   /*=======================
   Render function
@@ -121,9 +139,10 @@ class AddAppt extends React.Component {
                   <p class="control is-small">
                     <span class="select is-small">
                       <select id="apptCategory" onChange={this.handleChange} value={this.state.apptCategory}>
-                        <option value="General">Select category</option>
-                        <option value="Work">Work</option>
-                        <option value="Other">Other</option>
+                        <option value="" disabled selected>Select category</option>
+                        {this.props.categories.map((category, index) => {
+                          return <option value={category.name}>{category.name}</option>
+                        })}
                       </select>
                     </span>
                   </p>
@@ -140,23 +159,23 @@ class AddAppt extends React.Component {
                 </div>
               : <div class="field is-grouped">
                   <p class="control">
-                    <input class="input is-small" type="text" placeholder="New category name" />
+                    <input id="categoryName" onChange={this.handleChange} value={this.state.categoryName} class="input is-small" type="text" placeholder="New category name" />
                   </p>
 
                   <p class="control is-small">
                     <span class="select is-small">
-                      <select>
-                        <option value="Blue" disabled selected>Select color</option>
-                        <option>Red</option>
-                        <option>Green</option>
-                        <option>Blue</option>
+                      <select id="categoryColor" onChange={this.handleChange} value={this.state.categoryColor}>
+                        <option value="" disabled selected>Select color</option>
+                        {this.props.colors.map((color, index) => {
+                          return <option className={color.name} value={color.id + '-' + color.name}>{color.name}</option>
+                        })}
                       </select>
                     </span>
                   </p>
 
                   <p class="control">
 
-                    <i class="far fa-check-circle icon-button yes"></i>
+                    <i class="far fa-check-circle icon-button yes" onClick={() => this.createCategory()}></i>
 
                   </p>
 
