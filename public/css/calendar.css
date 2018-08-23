@@ -243,6 +243,7 @@ main {
   font-size: .7em;
   padding: 4px;
   max-height: 20px;
+  overflow-y: scroll;
 }
 
 .icon-add-container {

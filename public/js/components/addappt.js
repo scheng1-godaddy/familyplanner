@@ -53,6 +53,25 @@ class AddAppt extends React.Component {
     this.props.addCategory(category);
   }
   /*=======================
+  This method creates new appointment
+  =======================*/
+  createAppointment = () => {
+    let newAppt = {
+      "start_datetime": this.state.apptStartDate.format(),
+      "end_datetime": this.state.apptEndDate.format(),
+      "name": this.state.apptTitle,
+      "description": this.state.apptDescription,
+      "location": this.state.apptLocation,
+      "creator_id": this.props.user.id,
+      "family_id": this.props.user.family_id,
+      "category_id": Number(this.state.apptCategory.split('-')[1]),
+      "recurring": '',
+      "is_recurring": false
+    }
+    console.log('Format if newAppt', newAppt);
+    this.props.addAppt(newAppt);
+  }
+  /*=======================
   Render function
   =======================*/
   renderForm = () => {
@@ -141,7 +160,7 @@ class AddAppt extends React.Component {
                       <select id="apptCategory" onChange={this.handleChange} value={this.state.apptCategory}>
                         <option value="" disabled selected>Select category</option>
                         {this.props.categories.map((category, index) => {
-                          return <option value={category.name}>{category.name}</option>
+                          return <option value={index + '-' + category.id + '-' + category.name}>{category.name}</option>
                         })}
                       </select>
                     </span>
@@ -218,14 +237,22 @@ class AddAppt extends React.Component {
             </div>
           </section>
           <footer class="modal-card-foot">
-            <div class="buttons has-addons is-right">
-              <span class="button is-small">Save</span>
-              <span class="button is-small" onClick={
-                  () => this.props.toggleState('showAddApptForm')
-                }>
-                Cancel
+            <a class="button is-small icon-button" onClick={
+                () => this.createAppointment()
+              }>
+              <span class="icon is-small">
+                <i class="far fa-calendar-check"></i>
               </span>
-            </div>
+              <span>Schedule</span>
+            </a>
+            <a class="button is-small icon-button" onClick={
+                () => this.props.toggleState('showAddApptForm')
+              }>
+              <span class="icon is-small">
+                <i class="fas fa-ban"></i>
+              </span>
+              <span>Cancel</span>
+            </a>
           </footer>
         </div>
       </div>

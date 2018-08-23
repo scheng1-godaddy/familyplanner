@@ -57,3 +57,42 @@
 .no:hover {
   color: darkred;
 }
+
+.showtable td {
+  border-bottom: 0;
+  height: .6em;
+}
+
+td.show-column-title  {
+  text-align: right;
+  border-right: 1px solid grey;
+  padding-right: 20px;
+  margin: 2em;
+}
+
+.category {
+  padding: .5em;
+  font-size: .8em;
+  color: white;
+  margin: 1em;
+  position: absolute;
+  top: -14px;
+  left: 7px;
+}
+
+.show-modal-header {
+  height: 5em;
+}
+
+.show-modal-title {
+  padding-top: 1em;
+}
+
+.modal-card-foot {
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: #353535;
+  color: white;
+}
