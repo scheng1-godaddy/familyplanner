@@ -107,6 +107,7 @@ class Calendar extends React.Component {
                 })
               }
             </div>
+            <div className="addappt-div" onClick={() => this.addApptHandler()}></div>
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -127,6 +128,7 @@ class Calendar extends React.Component {
     this.setState({
       selectedDate: day
     });
+    this.props.setSelectedDate(day);
   }
   /*====================================
     Displays cells for calendar

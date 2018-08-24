@@ -2,34 +2,29 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: {
-        status: 201,
-        message: "Session Created",
-        data: {
-          email: "shawnc8160@gmail.com",
-          family_id: 1,
-          family_name: "Cheng Family",
-          id: 1,
-          name: "Shawn",
-          password: "$2b$10$O.RScnErnvR8gVqBu/mKmeyuvBJreA6FjnWe6ln1o2hdMKDClkeBK"
-        }
-      },
+      user: null,
       colors: [],
       categories: [],
       schedule: [],
       showAppt: false,
       showAddApptForm: false,
+      showEditApptForm: false,
       selectedAppt: null,
-      selectedIndex: null
+      selectedIndex: null,
+      selectedDate: null
     }
   }
   /*====================================
     Things to do during load
   =====================================*/
   componentDidMount() {
-    (this.state.user && this.state.user.data) ? this.getSchedule() : this.checkSession();
+    if (this.state.user && this.state.user.data) {
+      this.getSchedule();
+      this.getCategories();
+    } else {
+      this.checkSession();
+    }
     this.getColors();
-    this.getCategories();
   }
   /*=======================
   Toggles any of the booleans in state
@@ -51,6 +46,7 @@ class App extends React.Component {
       .then(responseJson => {
         this.setUser(responseJson);
         this.getSchedule();
+        this.getCategories();
       })
       .catch(error => {
       console.log(error);
@@ -80,6 +76,14 @@ class App extends React.Component {
     console.log('Setting user', user);
     this.setState({
       user: user
+    })
+    this.getSchedule();
+    this.getCategories();
+  }
+
+  setSelectedDate = (date) => {
+    this.setState({
+      selectedDate: moment(date)
     })
   }
   /*====================================
@@ -136,6 +140,44 @@ class App extends React.Component {
         this.setState({
           schedule: newArr,
           showAddApptForm: false
+        })
+      })
+      .catch(error => console.log(error))
+  }
+  /*====================================
+    Updates Appointment
+  =====================================*/
+  updateAppt = (appt) => {
+    console.log('calling updateAppt', appt);
+    // Add to database
+    fetch('/appointments/' + this.state.selectedAppt.id, {
+      body: JSON.stringify(appt),
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        let newAppt = responseJson.data
+        let category = this.state.categories.find((category) => {
+          return category.id == newAppt.category_id
+        });
+        newAppt["category"] = category.name;
+        let color = this.state.colors.find((color) => {
+          return color.id == category.color_id
+        });
+        newAppt["color"] = color.name
+        newAppt["creator_name"] = this.state.user.data.name;
+        console.log('Final format for new appointment:', newAppt);
+        let newArr = this.state.schedule;
+        newArr[this.state.selectedIndex] = newAppt
+        this.setState({
+          schedule: newArr,
+          showEditApptForm: false
         })
       })
       .catch(error => console.log(error))
@@ -241,8 +283,21 @@ class App extends React.Component {
               ? <ShowAppt
               appt={this.state.selectedAppt}
               index={this.state.selectedIndex}
+              toggleState={this.toggleState}
               closeAppt={this.closeAppt}
               deleteAppt={this.deleteAppt}/>
+              : null
+            }
+            {
+              (this.state.showEditApptForm)
+              ? <EditAppt
+                toggleState={this.toggleState}
+                colors={this.state.colors}
+                categories={this.state.categories}
+                user={this.state.user.data}
+                addCategory={this.addCategory}
+                appt={this.state.selectedAppt}
+                updateAppt={this.updateAppt}/>
               : null
             }
             {
@@ -253,7 +308,8 @@ class App extends React.Component {
                 categories={this.state.categories}
                 user={this.state.user.data}
                 addCategory={this.addCategory}
-                addAppt={this.addAppt}/>
+                addAppt={this.addAppt}
+                selectedDate={this.state.selectedDate}/>
               : null
             }
             <Calendar
@@ -262,6 +318,7 @@ class App extends React.Component {
               displayAppt={this.displayAppt}
               addAppt={this.addAppt}
               toggleState={this.toggleState}
+              setSelectedDate={this.setSelectedDate}
               />
           </main>
         </div>

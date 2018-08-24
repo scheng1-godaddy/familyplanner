@@ -1,24 +1,16 @@
-class AddAppt extends React.Component {
+class EditAppt extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apptTitle: '',
-      apptStartDate: '',
-      apptEndDate: '',
-      apptLocation: '',
-      apptCategory: '',
-      apptDescription: '',
-      categoryColor: '',
-      categoryName: '',
+      apptTitle: this.props.appt.name,
+      apptStartDate: moment(this.props.appt.start_datetime),
+      apptEndDate: moment(this.props.appt.end_datetime),
+      apptLocation: this.props.appt.location,
+      apptCategory: this.props.appt.category,
+      apptDescription: this.props.appt.description,
+      categoryColor: this.props.appt.color,
+      categoryName: this.formatCategoryValue(),
       createCategory: false,
-      newAppt: {}
-    }
-  }
-  componentDidMount() {
-    if (this.props.selectedDate) {
-      this.setState({
-        apptStartDate: this.props.selectedDate
-      })
     }
   }
   /*=======================
@@ -44,6 +36,15 @@ class AddAppt extends React.Component {
     });
   }
   /*=======================
+  Formats the category value to include its index and id along with value
+  =======================*/
+  formatCategoryValue = () => {
+    let index = this.props.categories.findIndex(category => category.name==this.props.appt.category);
+    console.log('formatCategory index is', index);
+    return index+'-' + this.props.appt.category_id + '-' + this.props.appt.category;
+  }
+
+  /*=======================
   This method creates new category
   =======================*/
   createCategory = () => {
@@ -62,8 +63,8 @@ class AddAppt extends React.Component {
   /*=======================
   This method creates new appointment
   =======================*/
-  createAppointment = () => {
-    let newAppt = {
+  updateAppointment = () => {
+    let dbAppt = {
       "start_datetime": this.state.apptStartDate.format(),
       "end_datetime": this.state.apptEndDate.format(),
       "name": this.state.apptTitle,
@@ -71,12 +72,12 @@ class AddAppt extends React.Component {
       "location": this.state.apptLocation,
       "creator_id": this.props.user.id,
       "family_id": this.props.user.family_id,
-      "category_id": Number(this.state.apptCategory.split('-')[1]),
+      "category_id": Number(this.state.categoryName.split('-')[1]),
       "recurring": '',
       "is_recurring": false
     }
-    console.log('Format if newAppt', newAppt);
-    this.props.addAppt(newAppt);
+    console.log('Format of newAppt', dbAppt);
+    this.props.updateAppt(dbAppt);
   }
   /*=======================
   Render function
@@ -164,8 +165,7 @@ class AddAppt extends React.Component {
               ? <div class="field is-grouped">
                   <p class="control is-small">
                     <span class="select is-small">
-                      <select id="apptCategory" onChange={this.handleChange} value={this.state.apptCategory}>
-                        <option value="" disabled selected>Select category</option>
+                      <select id="categoryName" onChange={this.handleChange} value={this.state.categoryName}>
                         {this.props.categories.map((category, index) => {
                           return <option value={index + '-' + category.id + '-' + category.name}>{category.name}</option>
                         })}
@@ -236,7 +236,7 @@ class AddAppt extends React.Component {
         <div class="modal-card">
           <header class="modal-card-head">
             <p class="modal-card-title">Create new entry</p>
-            <button onClick={() => this.props.toggleState('showAddApptForm')} class="delete" aria-label="close"></button>
+            <button onClick={() => this.props.toggleState('showEditApptForm')} class="delete" aria-label="close"></button>
           </header>
           <section class="modal-card-body">
             <div class="add-appt-body">
@@ -245,7 +245,7 @@ class AddAppt extends React.Component {
           </section>
           <footer class="modal-card-foot">
             <a class="button is-small icon-button" onClick={
-                () => this.createAppointment()
+                () => this.updateAppointment()
               }>
               <span class="icon is-small">
                 <i class="far fa-calendar-check"></i>
@@ -253,7 +253,7 @@ class AddAppt extends React.Component {
               <span>Schedule</span>
             </a>
             <a class="button is-small icon-button" onClick={
-                () => this.props.toggleState('showAddApptForm')
+                () => this.props.toggleState('showEditApptForm')
               }>
               <span class="icon is-small">
                 <i class="fas fa-ban"></i>

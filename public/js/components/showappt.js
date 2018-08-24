@@ -31,7 +31,7 @@ class ShowAppt extends React.Component {
                     End Date
                   </td>
                   <td class="show-column-value">
-                    {moment(this.props.appt.end_datetime).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                    {moment(this.props.appt.end_datetime).format("dddd, MMMM Do YYYY, h:mm a")}
                   </td>
                 </tr>
                 <tr>
@@ -63,7 +63,7 @@ class ShowAppt extends React.Component {
           </section>
           <footer class="modal-card-foot">
 
-              <a class="button is-small icon-button">
+              <a class="button is-small icon-button" onClick={() => this.props.toggleState('showAppt', 'showEditApptForm')}>
                 <span class="icon is-small">
                   <i class="fas fa-pencil-alt"></i>
                 </span>
