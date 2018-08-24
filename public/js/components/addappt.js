@@ -14,6 +14,13 @@ class AddAppt extends React.Component {
       newAppt: {}
     }
   }
+  componentDidMount() {
+    if (this.props.selectedDate) {
+      this.setState({
+        apptStartDate: this.props.selectedDate
+      })
+    }
+  }
   /*=======================
   This method sets state to whatever user typed in form
   =======================*/
