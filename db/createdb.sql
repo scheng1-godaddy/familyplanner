@@ -37,14 +37,14 @@ CREATE TABLE category (
   color_id INT
 );
 
-CREATE TABLE color (
+CREATE TABLE colors (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255),
   value VARCHAR(255)
-)
+);
 
-INSERT INTO eventcolor (name, value) VALUES ('Green', 'A8FF9C');
-INSERT INTO eventcolor (name, value) VALUES ('Blue', '5A9DE8');
-INSERT INTO eventcolor (name, value) VALUES ('Pink', 'FFA9EE');
-INSERT INTO eventcolor (name, value) VALUES ('Brown', 'E8C58E');
-INSERT INTO eventcolor (name, value) VALUES ('YellowGreen', 'E8FFDE');
+INSERT INTO colors (name, value) VALUES ('Green', 'A8FF9C');
+INSERT INTO colors (name, value) VALUES ('Blue', '5A9DE8');
+INSERT INTO colors (name, value) VALUES ('Pink', 'FFA9EE');
+INSERT INTO colors (name, value) VALUES ('Orange', 'E8C58E');
+INSERT INTO colors (name, value) VALUES ('Red', 'E8FFDE');
