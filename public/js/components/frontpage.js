@@ -82,6 +82,11 @@ class FrontPage extends React.Component {
           <div class="front-logo"> Family<b>Planner</b> </div>
         </div>
         {this.displayLogin()}
+        <div>
+          <p> Please login with: </p>
+          <p> email: <b> test@test.com </b> </p>
+          <p> password:<b> test </b></p>
+        </div>
       </div>
     )
   }
