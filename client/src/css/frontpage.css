@@ -1,0 +1,33 @@
+.frontpage-container {
+  height: 400px;
+  width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.frontpage-logo-container {
+  font-size: 3em;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-form-container {
+  width: 400px;
+}
+
+.front-icon, .front-logo {
+  display:inline-block;
+  margin-right: 10px;
+}
+
+.submit-button {
+  color: grey;
+}
+
+.submit-button:hover {
+  background-color: darkgrey;
+}
