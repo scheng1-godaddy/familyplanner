@@ -283,7 +283,7 @@ class App extends React.Component {
     return (
       (this.state.user && this.state.user.data)
       ? <div className="App">
-          <NavBar user={this.state.user} setUser={this.setUser}/>
+          <NavBar user={this.state.user} setUser={this.setUser} toggleState={this.toggleState}/>
             <header>
               <div id="logo">
                 <span>
